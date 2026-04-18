@@ -1,0 +1,15 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="form">
+  <label>Car</label>
+  <input formControlName="carId" placeholder="Enter Car Id" />
+
+  <label>Customer</label>
+  <input formControlName="customerId" placeholder="Enter Customer Id" />
+
+  <label>From Date</label>
+  <input type="date" formControlName="fromDate" />
+
+  <label>To Date</label>
+  <input type="date" formControlName="toDate" />
+
+  <button type="submit">Book</button>
+</form>

@@ -1,0 +1,88 @@
+<!-- HEADER -->
+<header class="header">
+  <div class="container">
+    <div class="logo">SASS<span>CARS</span></div>
+
+    <nav class="nav">
+      <a routerLink="/home">Home</a>
+      <a routerLink="/cars">Cars</a>
+      <a routerLink="/about">About</a>
+      <a routerLink="/contact">Contact</a>
+    </nav>
+
+    <button class="menu-btn" (click)="toggleMenu()">☰</button>
+  </div>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" [class.active]="isMenuOpen">
+  <a routerLink="/home">Home</a>
+  <a routerLink="/cars">Cars</a>
+  <a routerLink="/about">About</a>
+  <a routerLink="/contact">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <h1>Find Your Perfect Ride 🚗</h1>
+    <p>Book premium cars at affordable prices</p>
+
+    <div class="search-box">
+      <input type="text" placeholder="Location" />
+      <input type="date" />
+      <input type="date" />
+      <button>Search</button>
+    </div>
+  </div>
+</section>
+
+<!-- CAR LIST -->
+<section class="cars">
+  <div class="container">
+    <h2>Featured Cars</h2>
+
+    <div class="car-grid">
+      <div class="car-card" *ngFor="let car of cars">
+        <img [src]="car.image" [alt]="car.name" class="car-img" />
+
+        <h3>{{ car.name }}</h3>
+        <p class="price">₹{{ car.price }} / day</p>
+
+        <div class="details">
+          <span>{{ car.seats }} Seats</span>
+          <span>{{ car.fuel }}</span>
+          <span>{{ car.type }}</span>
+        </div>
+
+        <button (click)="bookCar(car)">Book Now</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="container">
+    <h2>Why Choose Us?</h2>
+    <div class="features">
+      <div>
+        <h3>🚀 Fast Booking</h3>
+        <p>Quick and easy process</p>
+      </div>
+      <div>
+        <h3>💰 Best Prices</h3>
+        <p>No hidden charges</p>
+      </div>
+      <div>
+        <h3>🛡 Safe Cars</h3>
+        <p>Well maintained vehicles</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© 2026 SASSCARS. All rights reserved.</p>
+</footer>

@@ -1,0 +1,16 @@
+<div class="page-center">
+  <div class="details-container">
+    <img [src]="car.image" [alt]="car.brand + ' ' + car.model" class="car-image" />
+    <h1>{{ car.brand }} {{ car.model }}</h1>
+    <p class="description">{{ car.description }}</p>
+
+    <div class="specs">
+      <div class="spec"><strong>Price:</strong> ₹{{ car.price }}/day</div>
+      <div class="spec"><strong>Seats:</strong> {{ car.seats }}</div>
+      <div class="spec"><strong>Fuel:</strong> {{ car.fuel }}</div>
+      <div class="spec"><strong>Type:</strong> {{ car.type }}</div>
+    </div>
+
+    <button class="book-btn" (click)="bookCar()">Book Now</button>
+  </div>
+</div>

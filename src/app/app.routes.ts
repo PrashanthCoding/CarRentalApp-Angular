@@ -1,35 +1,16 @@
 import { Routes } from '@angular/router';
+import { About } from './features/about/about';
+import { Login } from './features/auth/login/login';
+import { CarDetails } from './features/cars/car-details/car-details';
+import { CarList } from './features/cars/car-list/car-list';
+import { Contact } from './features/contact/contact';
+import { Home } from './features/home/home';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-
-  {
-    path: 'login',
-    loadComponent: () => import('./features/auth/login/login').then((m) => m.Login),
-  },
-
-  {
-    path: 'cars',
-    loadComponent: () => import('./features/cars/car-list/car-list').then((m) => m.CarList),
-  },
-
-  {
-    path: 'bookings',
-    loadComponent: () =>
-      import('./features/bookings/booking-list/booking-list').then((m) => m.BookingList),
-  },
-
-  {
-    path: 'customers',
-    loadComponent: () =>
-      import('./features/customers/customer-list/customer-list').then((m) => m.CustomerList),
-  },
-
-  {
-    path: 'payments',
-    loadComponent: () =>
-      import('./features/payments/payment-history/payment-history').then((m) => m.PaymentHistory),
-  },
-
-  { path: '**', redirectTo: 'login' },
+  { path: '', component: Login },
+  { path: 'home', component: Home },
+  { path: 'cars', component: CarList },
+  { path: 'car-details', component: CarDetails },
+  { path: 'about', component: About },
+  { path: 'contact', component: Contact },
 ];

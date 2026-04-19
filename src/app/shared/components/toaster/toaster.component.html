@@ -1,0 +1,3 @@
+<div class="toaster" *ngIf="toaster$ | async as toaster" [ngClass]="toaster.type">
+  {{ toaster.message }}
+</div>

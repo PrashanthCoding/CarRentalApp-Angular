@@ -4,14 +4,14 @@
   <div class="grid">
     <div class="card" *ngFor="let car of cars">
       <img [src]="car.image" [alt]="car.brand + ' ' + car.model" class="car-img" />
-      <h3>{{ car.brand }} {{ car.model }}</h3>
+      <h3>{{ car.name }}</h3>
       <p class="price">₹{{ car.price }}/day</p>
       <div class="details">
         <span>{{ car.seats }} Seats</span>
         <span>{{ car.fuel }}</span>
         <span>{{ car.type }}</span>
       </div>
-      <button (click)="selectCar(car)">View Details</button>
+      <button (click)="viewDetails(car)">View Details</button>
     </div>
   </div>
 </div>

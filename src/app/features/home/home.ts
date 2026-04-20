@@ -1,58 +1,78 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { CarService } from '../../core/services/car.service';
 import { ToasterService } from '../../shared/components/toaster/toaster.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class Home {
+export class Home implements OnInit {
   isMenuOpen = false;
+  cars: any[] = [];
+  search = {
+    location: '',
+    fromDate: '',
+    toDate: '',
+  };
 
-  constructor(private toasterService: ToasterService) {}
+  constructor(
+    private toasterService: ToasterService,
+    private carService: CarService,
+  ) {}
 
-  cars = [
-    {
-      name: 'BMW X5',
-      price: 120,
-      seats: 5,
-      fuel: 'Diesel',
-      type: 'Automatic',
-      image:
-        'https://images.unsplash.com/photo-1606611013016-969c19f27a42?q=80&w=1000&auto=format&fit=crop',
-    },
-    {
-      name: 'Audi A6',
-      price: 100,
-      seats: 5,
-      fuel: 'Petrol',
-      type: 'Automatic',
-      image:
-        'https://images.unsplash.com/photo-1552820728-8ac41f1ce891?q=80&w=1000&auto=format&fit=crop',
-    },
-    {
-      name: 'Tesla Model 3',
-      price: 150,
-      seats: 5,
-      fuel: 'Electric',
-      type: 'Automatic',
-      image:
-        'https://images.unsplash.com/photo-1560958089-fbf3ee9c4f5b?q=80&w=1000&auto=format&fit=crop',
-    },
-  ];
+  // Load cars from API
+  ngOnInit() {
+    this.loadCars();
+  }
+
+  loadCars() {
+    this.carService.getCars().subscribe({
+      next: (res) => {
+        this.cars = res;
+      },
+      error: () => {
+        this.toasterService.show('Failed to load cars', 'error');
+      },
+    });
+  }
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
+  // Booking API call
   bookCar(car: any) {
-    this.toasterService.show(
-      `Booking confirmed for ${car.name}! You will receive a confirmation email shortly.`,
-      'success',
-    );
+    const booking = {
+      carId: car.carId,
+      fromDate: new Date(),
+      toDate: new Date(new Date().setDate(new Date().getDate() + 1)),
+      userName: 'test', // later from token
+    };
+
+    this.carService.bookCar(booking).subscribe({
+      next: () => {
+        this.toasterService.show(`Booking confirmed for ${car.name}`, 'success');
+      },
+      error: () => {
+        this.toasterService.show('Booking failed', 'error');
+      },
+    });
+  }
+
+  searchCars() {
+    this.carService.searchCars(this.search).subscribe({
+      next: (res) => {
+        this.cars = res;
+      },
+      error: () => {
+        this.toasterService.show('Search failed', 'error');
+      },
+    });
   }
 }

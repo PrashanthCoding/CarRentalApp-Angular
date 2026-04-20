@@ -3,23 +3,27 @@ import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class CarService {
-  private api = 'https://localhost:5001/api/car';
+  private baseUrl = 'https://localhost:5001/api/car';
 
   constructor(private http: HttpClient) {}
 
-  getAll() {
-    return this.http.get(this.api);
+  // Get all cars
+  getCars() {
+    return this.http.get<any[]>(this.baseUrl);
   }
 
-  create(data: any) {
-    return this.http.post(this.api, data);
+  // Get car by ID
+  getCarById(id: number) {
+    return this.http.get<any>(`${this.baseUrl}/${id}`);
   }
 
-  update(id: number, data: any) {
-    return this.http.put(`${this.api}/${id}`, data);
+  // Search cars
+  searchCars(data: any) {
+    return this.http.post<any[]>(`${this.baseUrl}/search`, data);
   }
 
-  delete(id: number) {
-    return this.http.delete(`${this.api}/${id}`);
+  // Book car
+  bookCar(data: any) {
+    return this.http.post(`${this.baseUrl}/book`, data);
   }
 }

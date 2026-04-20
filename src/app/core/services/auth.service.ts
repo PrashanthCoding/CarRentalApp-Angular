@@ -5,19 +5,17 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class AuthService {
-  private api = 'https://localhost:7107/api/Auth';
+  private baseUrl = 'https://localhost:5001/api/auth';
 
   constructor(private http: HttpClient) {}
 
+  // Login API
   login(data: any) {
-    return this.http.post(`${this.api}/login`, data);
+    return this.http.post<any>(`${this.baseUrl}/login`, data);
   }
 
+  // Register API
   register(data: any) {
-    return this.http.post(`${this.api}/register`, data);
-  }
-
-  refreshToken() {
-    return this.http.post(`${this.api}/refresh`, {});
+    return this.http.post<any>(`${this.baseUrl}/register`, data);
   }
 }

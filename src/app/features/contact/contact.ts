@@ -17,21 +17,21 @@ export class Contact {
     private toaster: ToasterService,
   ) {}
 
-  // ✅ Form model
+  // Form model
   contact = {
     name: '',
     email: '',
     message: '',
   };
 
-  // ✅ Submit method
+  // Submit method
   sendMessage() {
     if (!this.contact.name || !this.contact.email || !this.contact.message) {
       this.toaster.show('Please fill all fields', 'error');
       return;
     }
 
-    this.http.post('https://localhost:5001/api/contact', this.contact).subscribe({
+    this.http.post('https://localhost:7013/api/contact', this.contact).subscribe({
       next: () => {
         this.toaster.show('Message sent successfully', 'success');
 

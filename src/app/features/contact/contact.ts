@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ToasterService } from '../../shared/components/toaster/toaster.service';
+import { ToasterService } from '../../core/services/toaster.service';
 
 @Component({
   selector: 'app-contact',
@@ -35,7 +35,7 @@ export class Contact {
       next: () => {
         this.toaster.show('Message sent successfully', 'success');
 
-        // 🔄 Reset form
+        // Reset form
         this.contact = {
           name: '',
           email: '',

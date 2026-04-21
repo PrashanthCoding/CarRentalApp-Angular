@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CarService } from '../../core/services/car.service';
-import { ToasterService } from '../../shared/components/toaster/toaster.service';
+import { ToasterService } from '../../core/services/toaster.service';
 
 @Component({
   selector: 'app-home',

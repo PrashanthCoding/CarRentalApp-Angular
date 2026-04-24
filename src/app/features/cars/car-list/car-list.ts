@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Car } from '../../../core/models/car.model';
 import { CarService } from '../../../core/services/car.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { CarService } from '../../../core/services/car.service';
   styleUrl: './car-list.css',
 })
 export class CarList implements OnInit {
-  cars: any[] = [];
+  cars: Car[] = [];
 
   constructor(
     private router: Router,
@@ -25,7 +26,7 @@ export class CarList implements OnInit {
   loadCars() {
     this.carService.getCars().subscribe({
       next: (res) => {
-        this.cars = res;
+        this.cars = res.data;
       },
       error: () => {
         alert('Error loading cars');

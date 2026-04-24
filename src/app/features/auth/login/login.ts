@@ -53,10 +53,18 @@ export class Login {
       next: (res) => {
         console.log('Login success', res);
 
-        // Save JWT Token
-        this.tokenService.setToken(res.token);
+        // ✅ FIX: correct token path
+        const token = res?.data?.token;
 
-        // Navigate to home
+        if (!token) {
+          alert('Token not received');
+          return;
+        }
+
+        // Save token
+        this.tokenService.setToken(token);
+
+        // Navigate
         this.router.navigate(['/home']);
       },
       error: (err) => {
@@ -65,7 +73,6 @@ export class Login {
       },
     });
   }
-
   // REGISTER
   register() {
     if (this.registerForm.invalid) {

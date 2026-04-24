@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { map, Observable } from 'rxjs';
+import { Car } from '../../core/models/car.model';
 import { CarService } from '../../core/services/car.service';
 import { ToasterService } from '../../core/services/toaster.service';
 
@@ -14,17 +16,20 @@ import { ToasterService } from '../../core/services/toaster.service';
 })
 export class Home implements OnInit {
   isMenuOpen = false;
-  cars: any[] = [];
+  cars$!: Observable<Car[]>;
+  cars: Car[] = [];
   search = {
     location: '',
-    fromDate: '',
-    toDate: '',
+    pickupDate: '',
+    returnDate: '',
   };
 
   constructor(
     private toasterService: ToasterService,
     private carService: CarService,
-  ) {}
+  ) {
+    this.cars$ = this.carService.getCars().pipe(map((res) => res.data));
+  }
 
   // Load cars from API
   ngOnInit() {
@@ -34,9 +39,11 @@ export class Home implements OnInit {
   loadCars() {
     this.carService.getCars().subscribe({
       next: (res) => {
-        this.cars = res;
+        console.log('API RESPONSE:', res);
+        this.cars = [...res.data];
       },
-      error: () => {
+      error: (err) => {
+        console.error('API ERROR:', err);
         this.toasterService.show('Failed to load cars', 'error');
       },
     });
@@ -46,13 +53,17 @@ export class Home implements OnInit {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  // Booking API call
-  bookCar(car: any) {
+  bookCar(car: Car) {
+    if (!this.search.pickupDate || !this.search.returnDate) {
+      this.toasterService.show('Please select dates', 'error');
+      return;
+    }
+
     const booking = {
-      carId: car.carId,
-      fromDate: new Date(),
-      toDate: new Date(new Date().setDate(new Date().getDate() + 1)),
-      userName: 'test', // later from token
+      carId: car.id,
+      fromDate: this.search.pickupDate,
+      toDate: this.search.returnDate,
+      userName: 'test',
     };
 
     this.carService.bookCar(booking).subscribe({
@@ -66,9 +77,20 @@ export class Home implements OnInit {
   }
 
   searchCars() {
-    this.carService.searchCars(this.search).subscribe({
+    if (!this.search.pickupDate || !this.search.returnDate) {
+      this.toasterService.show('Please select dates', 'error');
+      return;
+    }
+
+    const payload = {
+      location: this.search.location,
+      pickupDate: new Date(this.search.pickupDate).toISOString(),
+      returnDate: new Date(this.search.returnDate).toISOString(),
+    };
+
+    this.carService.searchCars(payload).subscribe({
       next: (res) => {
-        this.cars = res;
+        this.cars = [...res.data];
       },
       error: () => {
         this.toasterService.show('Search failed', 'error');

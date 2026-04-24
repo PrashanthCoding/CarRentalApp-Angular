@@ -29,9 +29,12 @@
     <p>Book premium cars at affordable prices</p>
 
     <div class="search-box">
-      <input type="text" placeholder="Location" />
-      <input type="date" />
-      <input type="date" />
+      <input type="text" placeholder="Location" [(ngModel)]="search.location" />
+
+      <input type="date" [(ngModel)]="search.pickupDate" />
+
+      <input type="date" [(ngModel)]="search.returnDate" />
+
       <button (click)="searchCars()">Search</button>
     </div>
   </div>
@@ -43,8 +46,8 @@
     <h2>Featured Cars</h2>
 
     <div class="car-grid">
-      <div class="car-card" *ngFor="let car of cars">
-        <img [src]="car.image" [alt]="car.name" class="car-img" />
+      <div class="car-card" *ngFor="let car of cars$ | async">
+        <!-- <img [src]="car.image[0]" [alt]="car.name" class="car-img" /> -->
 
         <h3>{{ car.name }}</h3>
         <p class="price">₹{{ car.price }} / day</p>

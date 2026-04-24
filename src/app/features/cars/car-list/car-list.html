@@ -3,7 +3,7 @@
 
   <div class="grid">
     <div class="card" *ngFor="let car of cars">
-      <img [src]="car.image" [alt]="car.brand + ' ' + car.model" class="car-img" />
+      <img [src]="car.image" [alt]="car.name" class="car-img" />
       <h3>{{ car.name }}</h3>
       <p class="price">₹{{ car.price }}/day</p>
       <div class="details">

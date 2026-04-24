@@ -1,29 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ApiResponse } from '../models/api-response.model';
+import { Car } from '../models/car.model';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root',
+})
 export class CarService {
-  private baseUrl = 'https://localhost:7013/api/car';
+  private baseUrl = 'https://localhost:7013/api';
 
   constructor(private http: HttpClient) {}
 
-  // Get all cars
   getCars() {
-    return this.http.get<any[]>(this.baseUrl);
+    return this.http.get<ApiResponse<Car[]>>(`${this.baseUrl}/car`);
   }
 
-  // Get car by ID
-  getCarById(id: number) {
-    return this.http.get<any>(`${this.baseUrl}/${id}`);
-  }
-
-  // Search cars
   searchCars(data: any) {
-    return this.http.post<any[]>(`${this.baseUrl}/search`, data);
+    return this.http.post<ApiResponse<Car[]>>(`${this.baseUrl}/car/search`, data);
   }
 
-  // Book car
   bookCar(data: any) {
-    return this.http.post(`${this.baseUrl}/book`, data);
+    return this.http.post(`${this.baseUrl}/booking`, data);
   }
 }

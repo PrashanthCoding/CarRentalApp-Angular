@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { ToasterService } from '../../../core/services/toaster.service';
 import { TokenService } from '../../../core/services/token.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class Login {
     private router: Router,
     private authService: AuthService,
     private tokenService: TokenService,
+    private toaster: ToasterService,
   ) {
     // Login Form
     this.loginForm = this.fb.group({
@@ -45,7 +47,7 @@ export class Login {
   // LOGIN
   login() {
     if (this.loginForm.invalid) {
-      alert('Please enter valid details');
+      this.toaster.show('Please enter valid details', 'error');
       return;
     }
 
@@ -53,41 +55,44 @@ export class Login {
       next: (res) => {
         console.log('Login success', res);
 
-        // ✅ FIX: correct token path
+        // correct token path
         const token = res?.data?.token;
 
         if (!token) {
-          alert('Token not received');
+          this.toaster.show('Token not received', 'error');
           return;
         }
 
         // Save token
         this.tokenService.setToken(token);
 
+        this.toaster.show('Login successful', 'success');
+
         // Navigate
         this.router.navigate(['/home']);
       },
       error: (err) => {
         console.error(err);
-        alert('Invalid email or password');
+        this.toaster.show('Invalid email or password', 'error');
       },
     });
   }
+
   // REGISTER
   register() {
     if (this.registerForm.invalid) {
-      alert('Please fill all fields');
+      this.toaster.show('Please fill all fields', 'error');
       return;
     }
 
     this.authService.register(this.registerForm.value).subscribe({
       next: () => {
-        alert('Registration successful');
+        this.toaster.show('Registration successful', 'success');
         this.isLogin = true; // switch to login
       },
       error: (err) => {
         console.error(err);
-        alert('User already exists');
+        this.toaster.show('User already exists', 'error');
       },
     });
   }

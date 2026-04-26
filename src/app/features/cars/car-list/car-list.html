@@ -1,17 +1,23 @@
 <div class="container">
   <h2>Available Cars</h2>
 
-  <div class="grid">
-    <div class="card" *ngFor="let car of cars">
-      <img [src]="car.image" [alt]="car.name" class="car-img" />
-      <h3>{{ car.name }}</h3>
-      <p class="price">₹{{ car.price }}/day</p>
-      <div class="details">
-        <span>{{ car.seats }} Seats</span>
-        <span>{{ car.fuel }}</span>
-        <span>{{ car.type }}</span>
+  <ng-container *ngIf="cars$ | async as cars">
+    <div *ngIf="cars.length === 0" class="no-data">No cars available</div>
+
+    <div class="grid" *ngIf="cars.length > 0">
+      <div class="card" *ngFor="let car of cars">
+        <h3>{{ car.name }}</h3>
+
+        <p class="price">₹{{ car.price }} / day</p>
+
+        <div class="details">
+          <span>🚗 {{ car.seats }} Seats</span>
+          <span>⛽ {{ car.fuel }}</span>
+          <span>⚙️ {{ car.type }}</span>
+        </div>
+
+        <button (click)="viewDetails(car)">View Details</button>
       </div>
-      <button (click)="viewDetails(car)">View Details</button>
     </div>
-  </div>
+  </ng-container>
 </div>

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { map, Observable } from 'rxjs';
 import { Car } from '../../../core/models/car.model';
 import { CarService } from '../../../core/services/car.service';
 
@@ -11,8 +12,8 @@ import { CarService } from '../../../core/services/car.service';
   templateUrl: './car-list.html',
   styleUrl: './car-list.css',
 })
-export class CarList implements OnInit {
-  cars: Car[] = [];
+export class CarList {
+  cars$!: Observable<Car[]>;
 
   constructor(
     private router: Router,
@@ -20,21 +21,10 @@ export class CarList implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loadCars();
+    this.cars$ = this.carService.getCars().pipe(map((res) => res.data));
   }
 
-  loadCars() {
-    this.carService.getCars().subscribe({
-      next: (res) => {
-        this.cars = res.data;
-      },
-      error: () => {
-        alert('Error loading cars');
-      },
-    });
-  }
-
-  viewDetails(car: any) {
-    this.router.navigate(['/car-details'], { state: { car } });
+  viewDetails(car: Car) {
+    this.router.navigate(['/car-details', car.id]);
   }
 }

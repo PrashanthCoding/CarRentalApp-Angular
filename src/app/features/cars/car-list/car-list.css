@@ -118,10 +118,10 @@ body {
     border-radius: 15px;
   }
 
-  .car-img {
+  /* .car-img {
     height: 180px;
     font-size: 2.5rem;
-  }
+  } */
 
   .card h3 {
     font-size: 1.3rem;
@@ -170,12 +170,12 @@ body {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
   }
 
-  .car-img {
+  /* .car-img {
     height: 150px;
     font-size: 2rem;
     border-radius: 10px;
     margin-bottom: 15px;
-  }
+  } */
 
   .card h3 {
     font-size: 1.2rem;
@@ -212,10 +212,10 @@ body {
     padding: 15px;
   }
 
-  .car-img {
+  /* .car-img {
     height: 140px;
     font-size: 1.8rem;
-  }
+  } */
 
   .card h3 {
     font-size: 1.1rem;

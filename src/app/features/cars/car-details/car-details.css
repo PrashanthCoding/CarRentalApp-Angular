@@ -30,7 +30,7 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-.car-image {
+/* .car-image {
   width: 100%;
   max-width: 500px;
   height: 300px;
@@ -39,7 +39,7 @@
   object-fit: cover;
   object-position: center;
   display: block;
-}
+} */
 
 .details-container h1 {
   color: #333;
@@ -103,10 +103,10 @@
     border-radius: 15px;
   }
 
-  .car-image {
+  /* .car-image {
     font-size: 3.5rem;
     margin-bottom: 15px;
-  }
+  } */
 
   .details-container h1 {
     font-size: 1.8rem;
@@ -148,10 +148,10 @@
     border-radius: 12px;
   }
 
-  .car-image {
+  /* .car-image {
     font-size: 3rem;
     margin-bottom: 12px;
-  }
+  } */
 
   .details-container h1 {
     font-size: 1.5rem;
@@ -189,9 +189,9 @@
     padding: 15px 10px;
   }
 
-  .car-image {
+  /* .car-image {
     font-size: 2.5rem;
-  }
+  } */
 
   .details-container h1 {
     font-size: 1.3rem;

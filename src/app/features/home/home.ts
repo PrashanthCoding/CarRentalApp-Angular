@@ -28,12 +28,12 @@ export class Home implements OnInit {
     private toasterService: ToasterService,
     private carService: CarService,
   ) {
-    this.cars$ = this.carService.getCars().pipe(map((res) => res.data));
+    //this.cars$ = this.carService.getCars().pipe(map((res) => res.data));
   }
 
   // Load cars from API
   ngOnInit() {
-    this.loadCars();
+    this.cars$ = this.carService.getCars().pipe(map((res) => res.data));
   }
 
   loadCars() {
@@ -61,17 +61,17 @@ export class Home implements OnInit {
 
     const booking = {
       carId: car.id,
-      fromDate: this.search.pickupDate,
-      toDate: this.search.returnDate,
-      userName: 'test',
+      pickupDate: this.search.pickupDate,
+      returnDate: this.search.returnDate,
+      userId: 1,
     };
 
     this.carService.bookCar(booking).subscribe({
       next: () => {
         this.toasterService.show(`Booking confirmed for ${car.name}`, 'success');
       },
-      error: () => {
-        this.toasterService.show('Booking failed', 'error');
+      error: (err) => {
+        this.toasterService.show(err.error?.message || 'Booking failed', 'error');
       },
     });
   }
